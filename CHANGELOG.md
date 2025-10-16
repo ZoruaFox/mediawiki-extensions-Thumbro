@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/StarCitizenTools/mediawiki-extensions-Thumbro/compare/v1.1.0...v1.1.1) (2025-10-16)
+
+
+### Bug Fixes
+
+* make sure that Thumbro replaces ThumbnailImage ([617e5d9](https://github.com/StarCitizenTools/mediawiki-extensions-Thumbro/commit/617e5d9d7c1ae1e599a7515269d4745e7b130c4d))
+
 ## [1.1.0](https://github.com/StarCitizenTools/mediawiki-extensions-Thumbro/compare/v1.0.0...v1.1.0) (2025-09-22)
 
 
