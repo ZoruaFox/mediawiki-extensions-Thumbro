@@ -26,7 +26,7 @@ class ThumbroThumbnailImage extends ThumbnailImage {
 		$services = MediaWikiServices::getInstance();
 		$mainConfig = $services->getMainConfig();
 		$nativeImageLazyLoading = $mainConfig->get( MainConfigNames::NativeImageLazyLoading );
-		$useLegacyMediaStyles = $mainConfig->get( MainConfigNames::UseLegacyMediaStyles );
+		$enableLegacyMediaDOM = $mainConfig->get( MainConfigNames::ParserEnableLegacyMediaDOM );
 
 		if ( func_num_args() === 2 ) {
 			throw new InvalidArgumentException( __METHOD__ . ' called in the old style' );
@@ -46,7 +46,7 @@ class ThumbroThumbnailImage extends ThumbnailImage {
 		// Description links get the mw-file-description class and link
 		// to the file description page, making the resource redundant
 		if (
-			!$useLegacyMediaStyles &&
+			!$enableLegacyMediaDOM &&
 			isset( $options['magnify-resource'] ) &&
 			!( $options['desc-link'] ?? false )
 		) {
@@ -92,7 +92,7 @@ class ThumbroThumbnailImage extends ThumbnailImage {
 		} else {
 			$linkAttribs = false;
 			if ( !empty( $options['title'] ) ) {
-				if ( $useLegacyMediaStyles ) {
+				if ( $enableLegacyMediaDOM ) {
 					$attribs['title'] = $options['title'];
 				} else {
 					$linkAttribs = [ 'title' => $options['title'] ];
@@ -124,8 +124,11 @@ class ThumbroThumbnailImage extends ThumbnailImage {
 			$attribs['srcset'] = Html::srcSet( $responsiveUrls );
 		}
 
+		// MODIFIED
 		$hookContainer = $services->getHookContainer();
-		( new HookRunner( $hookContainer ) )->onThumbnailBeforeProduceHTML( $this, $attribs, $linkAttribs );
+
+		( new HookRunner( $hookContainer ) )
+			->onThumbnailBeforeProduceHTML( $this, $attribs, $linkAttribs );
 
 		$sources = [];
 		if ( isset( $attribs[ 'srcset' ] ) ) {
