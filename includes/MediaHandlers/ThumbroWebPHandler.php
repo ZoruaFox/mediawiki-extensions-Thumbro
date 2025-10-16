@@ -8,12 +8,7 @@ use MediaWiki\MediaWikiServices;
 use WebPHandler;
 
 class ThumbroWebPHandler extends WebPHandler {
-	/**
-	 * @inheritDoc
-	 */
-	public function getThumbType( $ext, $mime, $params = null ) {
-		return [ 'webp', 'image/webp' ];
-	}
+	use ThumbroHandlerTrait;
 
 	/**
 	 * We cannot animate thumbnails that are bigger than a particular size
